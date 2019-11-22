@@ -15,6 +15,7 @@
 
 #include "stdafx.h"
 #include "Level1.h"
+#include "PlayerShip.h"
 
 //------------------------------------------------------------------------------
 
@@ -46,14 +47,19 @@ void Level1::Initialize()
 	// Create a transform component at 0,0 with scale 300,300
 	Transform* transform = new Transform(0.0f, 0.0f);
 	transform->SetRotation(0.0f);
-	transform->SetScale(Vector2D(2.0f, 2.0f));
+	transform->SetScale(Vector2D(0.5f, 0.5f));
 	testObject->AddComponent(transform);
 
 	// Create a sprite component and set its mesh and sprite source
 	Sprite* sprite = new Sprite();
-	sprite->SetSpriteSource(spriteSource);
-	sprite->SetColor(Colors::Green);
+	sprite->SetSpriteSource(ResourceGetSpriteSource("PlayerShip"));
 	testObject->AddComponent(sprite);
+	testObject->AddComponent(sprite);
+	RigidBody* rigidBody = new RigidBody();
+	testObject->AddComponent(rigidBody);
+	PlayerShip* playerShip = new PlayerShip();
+	testObject->AddComponent(playerShip);
+
 
 	// Add object to object manager
 	GetSpace()->GetObjectManager().AddObject(*testObject);

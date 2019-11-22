@@ -68,6 +68,10 @@ void PlayerShip::Move() const
 	{
 		rigidBody->AddForce(Vector2D::FromAngleRadians(transform->GetRotation()) * forwardThrust);
 	}
+	else
+	{
+		rigidBody->AddForce(-rigidBody->GetVelocity().Normalized());
+	}
 	if (rigidBody->GetVelocity().Magnitude() > maximumSpeed)
 	{
 		rigidBody->SetVelocity(rigidBody->GetVelocity().Normalized() * maximumSpeed);
@@ -105,13 +109,6 @@ void PlayerShip::Shoot()
 		bullet->GetComponent<Transform>()->SetTranslation(transform->GetTranslation() + Vector2D::FromAngleRadians(transform->GetRotation()) / 4);
 		bullet->GetComponent<Transform>()->SetRotation(transform->GetRotation());
 		bullet->GetComponent<RigidBody>()->SetVelocity(direction * bulletSpeed + rigidBody->GetVelocity());
-		//	bullet->GetComponent<PlayerProjectile>()->SetSpawner(this);
-		if (input.CheckHeld(VK_SHIFT))
-		{
-			if (homerUsage > 0)
-				--homerUsage;
-		}
-		
 		GetOwner()->GetSpace()->GetObjectManager().AddObject(*bullet);
 	}
 }
