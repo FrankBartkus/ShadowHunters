@@ -52,10 +52,6 @@ namespace Archetypes
 	// Returns:
 	//	 A pointer to the newly constructed game object
 	Beta::Archetype CreateEnemyArchetype();
-	// Create a game object archetype that uses the Asteroid texture.
-	// Returns:
-	//	 A pointer to the newly constructed game object
-	Beta::Archetype CreateRealEnemyArchetype();
 }
 
 //----------------------------------------------------------------------------
