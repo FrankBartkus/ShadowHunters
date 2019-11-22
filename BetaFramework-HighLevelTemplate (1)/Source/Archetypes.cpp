@@ -43,15 +43,54 @@ Beta::GameObject* Archetypes::CreatePlayer()
 
 Beta::Archetype Archetypes::CreateBulletArchetype()
 {
-	return Beta::Archetype();
+	//create the bullet object
+	GameObject* bulletObject = new GameObject("Bullet");
+	//get the transform
+	Transform* transform = new Transform(0.0f, 0.0f);
+	//set the scale
+	transform->SetScale(Vector2D(0.07f, 0.07f));
+	//get the rigidbody
+	RigidBody* rigidbody = new RigidBody();
+	//get the sprite
+	Sprite* sprite = new Sprite();
+	//get the timed death
+	//TimedDeath* timedDeath = new TimedDeath();
+	sprite->SetSpriteSource(ResourceGetSpriteSource("Bullet"));
+	// get the player projectile
+	//PlayerProjectile* playerProjectile = new PlayerProjectile();
+
+	//add the components to the bulletObject
+	bulletObject->AddComponent(sprite);
+	bulletObject->AddComponent(rigidbody);
+	bulletObject->AddComponent(transform);
+	//bulletObject->AddComponent(timedDeath);
+	//bulletObject->AddComponent(playerProjectile);
+	EngineGetModule(GameObjectFactory)->SaveObjectToFile(bulletObject);
+
+	return Archetype(bulletObject);
 }
 
 Beta::Archetype Archetypes::CreateEnemyArchetype()
 {
-	return Beta::Archetype();
-}
+	//create the game object
+	GameObject* enemyObject = new GameObject("enemy");
+	//get the transform
+	Transform* transform = new Transform(0.0f, 0.0f);
+	//set the scale
+	transform->SetScale(Vector2D(0.5f, 0.5f));
+	//get the rigidbody
+	RigidBody* rigidbody = new RigidBody();
+	//get the sprite
+	Sprite* sprite = new Sprite();
+	sprite->SetSpriteSource(ResourceGetSpriteSource("PlayerShip"));
 
-Beta::Archetype Archetypes::CreateRealEnemyArchetype()
-{
+	//add the collider and set the radius
+	ColliderCircle* collider = new ColliderCircle();
+	collider->SetRadius(transform->GetScale().x / 2);
+
+	//adds the components to the ship object
+	enemyObject->AddComponent(sprite);
+	enemyObject->AddComponent(rigidbody);
+	enemyObject->AddComponent(transform);
 	return Beta::Archetype();
 }
