@@ -1,64 +1,81 @@
+//------------------------------------------------------------------------------
+//
+// File Name:	WinLevel.cpp
+// Author(s):	Frank Bartkus (frank.bartkus)
+// Project:		BetaFramework
+// Course:		WANIC VGP2 2019-2020
+//
+// Copyright © 2018 DigiPen (USA) Corporation.
+//
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+// Include Files:
+//------------------------------------------------------------------------------
+
 #include "stdafx.h"
+#include "Level1.h"
 #include "WinLevel.h"
-
-#include "curses.h" // Colors
-
-#include "GameObject.h" // GameObject
-#include "Vector2D.h" // Vector2D
-#include "Wall.h" // Collisions
-#include "Engine.h" // DrawText
-#include "ObjectManager.h" // AddObject, DestroyAllObjects
+#include "PlayerShip.h"
 
 //------------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------
-// Private Consts:
-//------------------------------------------------------------------------------
-
-
-static const float levelWidth = 49.0f;
-static const float levelHeight = 19.0f;
-
-static const Vector2D levelCenter = { 35.0f, 15.0f };
-
+using namespace Beta;
 
 //------------------------------------------------------------------------------
 // Public Functions:
 //------------------------------------------------------------------------------
 
-// Initialize the memory associated with the Level2 game state.
-void YouWinInit(void)
+// Creates an instance of Level 1.
+WinLevel::WinLevel()
+	: Level("WinLevel"), testObject(nullptr)
 {
-	// Create a color pair to use later
-	EngineSetColorPair(0, COLOR_WHITE, COLOR_RED);
 }
 
-// Update the Level2 game state.
+void WinLevel::Load()
+{
+	spriteSource = ResourceGetSpriteSource("Circle");
+}
+
+// Initialize the memory associated with the Level1 game state.
+void WinLevel::Initialize()
+{
+	std::cout << "Level1: Initialize" << std::endl;
+
+	// Create a new game object
+	testObject = new GameObject("TestObject");
+
+	// Create a transform component at 0,0 with scale 300,300
+	Transform* transform = new Transform(0.0f, 0.0f);
+	transform->SetRotation(0.0f);
+	transform->SetScale(Vector2D(8.0f, 5.0f));
+	testObject->AddComponent(transform);
+
+	// Create a sprite component and set its mesh and sprite source
+	Sprite* sprite = new Sprite();
+	sprite->SetSpriteSource(ResourceGetSpriteSource("Win"));
+	testObject->AddComponent(sprite);
+
+	// Add object to object manager
+	GetSpace()->GetObjectManager().AddObject(*testObject);
+}
+
+// Update the Level1 game state.
 // Params:
 //	 dt = Change in time (in seconds) since the last game loop.
-void YouWinUpdate(float dt)
+void WinLevel::Update(float dt)
 {
 	UNREFERENCED_PARAMETER(dt);
-	float x = 0.0;
-	float y = -6.0;
-	// Draw level title
-	EngineDrawText("_____.___.               __      __.__      ._.", COLOR_RED, levelCenter.x - x, levelCenter.y + y);
-	EngineDrawText("\\__  |   | ____  __ __  /  \\    /  \\__| ____| |", COLOR_RED, levelCenter.x - x, levelCenter.y + y + 1);
-	EngineDrawText(" /   |   |/  _ \\|  |  \\ \\   \\/\\/   /  |/    \\ |", COLOR_RED, levelCenter.x - x, levelCenter.y + y + 2);
-	EngineDrawText(" \\____   (  <_> )  |  /  \\        /|  |   |  \\|", COLOR_RED, levelCenter.x - x, levelCenter.y + y + 3);
-	EngineDrawText(" / ______|\\____/|____/    \\__/\\  / |__|___|  /_", COLOR_RED, levelCenter.x - x, levelCenter.y + y + 4);
-	EngineDrawText(" \\/                            \\/          \\/\\/", COLOR_RED, levelCenter.x - x, levelCenter.y + y + 5);
-	EngineDrawText("Press SPACEBAR to quit. ", COLOR_WHITE, levelCenter.x + 12, levelCenter.y + y + 9);
 
-	if (EngineIsKeyPressed(' '))
-	{
-		EngineSetLevel(gEngineLevelQuit);
-	}
+	Input* input = EngineGetModule(Input);
+
+	// If the user presses the '1' key, restart the current level
+	if (input->CheckTriggered(32))
+		GetSpace()->SetLevel<Level1>();
 }
 
-// Free any memory associated with the Level2 game state.
-void YouWinShutdown(void)
+// Shutdown any memory associated with the Level1 game state.
+void WinLevel::Shutdown()
 {
-	ObjectManagerDestroyAllObjects();
-	resetNumberOfEnemies();
+	std::cout << "Level1::Shutdown" << std::endl;
 }

@@ -1,11 +1,11 @@
 //------------------------------------------------------------------------------
 //
-// File Name:	YouWin.h
+// File Name:	WinLevel.h
 // Author(s):	Frank Bartkus (frank.bartkus)
-// Project:		Dungeon
-// Course:		VGP2
+// Project:		BetaFramework
+// Course:		WANIC VGP2 2019-2020
 //
-// Copyright © 2019 DigiPen (USA) Corporation.
+// Copyright © 2018 DigiPen (USA) Corporation.
 //
 //------------------------------------------------------------------------------
 
@@ -15,20 +15,54 @@
 // Include Files:
 //------------------------------------------------------------------------------
 
-//------------------------------------------------------------------------------
+#include "Level.h"
 
 //------------------------------------------------------------------------------
-// Public Function Declarations:
+
+//------------------------------------------------------------------------------
+// Forward Declarations:
+//------------------------------------------------------------------------------
+namespace Beta
+{
+	class GameObject;
+	class SpriteSource;
+}
+
+//------------------------------------------------------------------------------
+// Public Structures:
 //------------------------------------------------------------------------------
 
-// Initialize the memory associated with Menu.
-void YouWinInit(void);
+class WinLevel : public Beta::Level
+{
+public:
+	//------------------------------------------------------------------------------
+	// Public Functions:
+	//------------------------------------------------------------------------------
 
-// Update the YouWin game state.
-// Params:
-//	 dt = Change in time (in seconds) since the last game loop.
-void YouWinUpdate(float dt);
+	// Creates an instance of Level 1.
+	WinLevel();
 
-// Free any memory associated with Menu.
-void YouWinShutdown(void);
-#pragma once
+	// Load assets associated with Level 1.
+	void Load() override;
+
+	// Initialize the memory associated with Level 1.
+	void Initialize() override;
+
+	// Update Level 1.
+	// Params:
+	//	 dt = Change in time (in seconds) since the last game loop.
+	void Update(float dt) override;
+
+	// Shutdown any memory associated with Level 1.
+	void Shutdown() override;
+
+private:
+	//------------------------------------------------------------------------------
+	// Private Variables:
+	//------------------------------------------------------------------------------
+
+	Beta::GameObject* testObject;
+	Beta::SpriteSourcePtr spriteSource;
+};
+
+//----------------------------------------------------------------------------
