@@ -15,6 +15,7 @@
 //------------------------------------------------------------------------------
 
 #include "Component.h" // base class
+#include "PlayerShip.h"
 
 //------------------------------------------------------------------------------
 
@@ -26,6 +27,7 @@ namespace Beta
 {
 	class Transform;
 	class RigidBody;
+	class GameObject;
 	struct Event;
 }
 
@@ -45,9 +47,7 @@ public:
 	//   speedMin = Minimum of range for asteroid movement speed.
 	//   speedMax = Maximum of range for asteroid movement speed.
 	//   basePointsValue = Point value for largest asteroid.
-	//   sizePointsModifier = Multiplicative scale applied to points for smaller asteroids.
-	//   spawnScaleModifier = Percentage of original asteroid's scale to use for new asteroids.
-	EnemyShadow(float speed = 0.5f, float size = 0.0f);
+	EnemyShadow(float speed = 0.5f, float size = 0.0f, bool newPos = true);
 
 	// Initialize this component (happens at object creation).
 	void Initialize() override;
@@ -70,6 +70,9 @@ private:
 
 	// Generate new asteroids based off this asteroid
 	void SpawnNewEnemyShadow();
+	
+	//get the player ship
+	void SetPlayerShip(Beta::GameObject* player);
 
 	//------------------------------------------------------------------------------
 	// Private Structures:
@@ -102,9 +105,13 @@ private:
 
 	Location location;
 
+	bool newPos;
+
 	// Components
 	Beta::Transform* transform;
 	Beta::RigidBody* rigidBody;
+
+	Beta::GameObject* player;
 
 	COMPONENT_SUBCLASS_DECLARATION(EnemyShadow)
 };

@@ -11,8 +11,8 @@
 #include "stdafx.h"
 #include "EnemyShadow.h"
 using namespace Beta;
-EnemyShadow::EnemyShadow(float speed, float size)
-	:Component("EnemyShadow"), speed(speed),size(size), rigidBody(nullptr), transform(nullptr), location(LocationTopLeft)
+EnemyShadow::EnemyShadow(float speed, float size,bool newPOS)
+	: Component("EnemyShadow"), speed(speed),size(size), rigidBody(nullptr), transform(nullptr), location(LocationTopLeft), player(nullptr),newPos(newPOS)
 {
 }
 
@@ -67,12 +67,26 @@ void EnemyShadow::SetPosition()
 
 void EnemyShadow::SetVelocity()
 {
-	float rand = Random::Range(0, 1);
-	
+	Vector2D rand = Vector2D(Random::Range(0, 1), Random::Range(0, 1));
+	Vector2D pos;
+	Vector2D direction = (Vector2D::FromAngleRadians(player->GetComponent<Transform>()->GetRotation()).Normalized() + rand.Normalized());
+	if (newPos == true)
+	{
+		pos = player->GetComponent<Transform>()->GetTranslation();
+		newPos = false;
+	}
+	rigidBody->SetVelocity(direction * speed);
+
+	transform->SetRotation(atan2(direction.y,direction.x));
 }
 
 void EnemyShadow::SpawnNewEnemyShadow()
 {
+}
+
+void EnemyShadow::SetPlayerShip(GameObject* player_)
+{
+	player = player_;
 }
 
 COMPONENT_SUBCLASS_DEFINITION(EnemyShadow)

@@ -38,7 +38,6 @@ Beta::GameObject* Archetypes::CreatePlayer()
 	//shipObject->AddComponent(screenWrap);
 
 	return shipObject;
-	return nullptr;
 }
 
 Beta::Archetype Archetypes::CreateBulletArchetype()

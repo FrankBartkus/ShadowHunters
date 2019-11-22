@@ -16,6 +16,7 @@
 #include "stdafx.h"
 #include "Level1.h"
 #include "PlayerShip.h"
+#include "EnemyShadow.h"
 
 //------------------------------------------------------------------------------
 
@@ -59,10 +60,28 @@ void Level1::Initialize()
 	testObject->AddComponent(rigidBody);
 	PlayerShip* playerShip = new PlayerShip();
 	testObject->AddComponent(playerShip);
+	/*
+	// Create a new game object
+	GameObject* enemyObject = new GameObject("TestObject");
+
+	// Create a transform component at 0,0 with scale 300,300
+	transform = new Transform(0.0f, 0.0f);
+	transform->SetRotation(0.0f);
+	transform->SetScale(Vector2D(0.5f, 0.5f));
+	testObject->AddComponent(transform);
+
+	// Create a sprite component and set its mesh and sprite source
+	sprite = new Sprite();
+	sprite->SetSpriteSource(ResourceGetSpriteSource("EnemyShip"));
+	enemyObject->AddComponent(sprite);
+	rigidBody = new RigidBody();
+	enemyObject->AddComponent(rigidBody);
+	EnemyShadow* enemyShadow = new EnemyShadow();
+	enemyObject->AddComponent(enemyShadow);
 
 
 	// Add object to object manager
-	GetSpace()->GetObjectManager().AddObject(*testObject);
+	GetSpace()->GetObjectManager().AddObject(*enemyObject);*/
 }
 
 // Update the Level1 game state.
