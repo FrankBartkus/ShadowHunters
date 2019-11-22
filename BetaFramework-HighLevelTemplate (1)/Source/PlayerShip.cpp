@@ -139,10 +139,13 @@ void PlayerShip::DeathSequence(float dt)
 void PlayerShip::OnCollisionStarted(const Beta::Event& event)
 {
 	const CollisionEvent& collision = static_cast<const CollisionEvent&>(event);
-	if (collision.otherObject.GetName() == "Enemy" && !isDying)
+	if (!isDying)
 	{
-		isDying = true;
-		timer = deathDuration;
+		if (collision.otherObject.GetName() == "Enemy")
+		{
+			isDying = true;
+			timer = deathDuration;
+		}
 	}
 }
 
