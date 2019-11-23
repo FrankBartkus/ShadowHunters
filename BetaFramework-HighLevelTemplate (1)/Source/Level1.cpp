@@ -55,7 +55,9 @@ void Level1::Initialize()
 	Sprite* sprite = new Sprite();
 	sprite->SetSpriteSource(ResourceGetSpriteSource("PlayerShip"));
 	testObject->AddComponent(sprite);
-	testObject->AddComponent(sprite);
+	ColliderCircle* circleColider = new ColliderCircle();
+	circleColider->SetRadius(0.25f);
+	testObject->AddComponent(circleColider);
 	RigidBody* rigidBody = new RigidBody();
 	testObject->AddComponent(rigidBody);
 	PlayerShip* playerShip = new PlayerShip();

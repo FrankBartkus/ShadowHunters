@@ -149,14 +149,26 @@ void PlayerShip::OnCollisionStarted(const Beta::Event& event)
 		}
 		if (collision.otherObject.GetName() == "Key")
 		{
-			GameObjectFactory* gameObjectFactory = EngineGetModule(GameObjectFactory);
-			GameObject* door = gameObjectFactory->CreateObject("Door");
-			door->GetComponent<Transform>()->SetTranslation(transform->GetTranslation());
-			while (transform->GetTranslation().Distance(door->GetComponent<Transform>()->GetTranslation()) > 100.0f)
+			GameObject* door = new GameObject("Door");
+			ColliderRectangle* colliderRectangle = new ColliderRectangle();
+			colliderRectangle->SetExtents(Vector2D(0.25 / 1.61803399, 0.25));
+			door->AddComponent(colliderRectangle);
+			Transform* doorTransform = new Transform(0.0f, 0.0f);
+			doorTransform->SetRotation(0.0f);
+			doorTransform->SetScale(Vector2D(0.5 / 1.61803399, 0.5f));
+			Vector2D newPosition;
+			do
 			{
-				door->GetComponent<Transform>()->SetTranslation(Vector2D(Random::Range(GetSpace()->GetCamera().GetScreenWorldDimensions().left, GetSpace()->GetCamera().GetScreenWorldDimensions().right), Random::Range(GetSpace()->GetCamera().GetScreenWorldDimensions().bottom, GetSpace()->GetCamera().GetScreenWorldDimensions().top)));
-			}
+				newPosition = Vector2D(Random::Range(GetSpace()->GetCamera().GetScreenWorldDimensions().left, GetSpace()->GetCamera().GetScreenWorldDimensions().right),
+					Random::Range(GetSpace()->GetCamera().GetScreenWorldDimensions().bottom, GetSpace()->GetCamera().GetScreenWorldDimensions().top));
+			} while (doorTransform->GetTranslation().Distance(newPosition) < 2.0f);
+			doorTransform->SetTranslation(newPosition);
+			door->AddComponent(doorTransform);
+			Sprite* sprite = new Sprite();
+			sprite->SetSpriteSource(ResourceGetSpriteSource("Door"));
+			door->AddComponent(sprite);
 			GetOwner()->GetSpace()->GetObjectManager().AddObject(*door);
+			collision.otherObject.Destroy();
 		}
 		if (collision.otherObject.GetName() == "Door")
 		{
