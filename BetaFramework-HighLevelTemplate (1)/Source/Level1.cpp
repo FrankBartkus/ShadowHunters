@@ -67,7 +67,7 @@ void Level1::Initialize()
 	testObject->AddComponent(screenWrap);
 	
 	// Create a new game object
-	enemyObject = new GameObject("TestObject");
+	enemyObject = new GameObject("EnemyShip");
 
 	// Create a transform component at 0,0 with scale 300,300
 	transform = new Transform(-2.0f, 0.0f);
