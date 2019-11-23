@@ -142,7 +142,7 @@ void PlayerShip::OnCollisionStarted(const Beta::Event& event)
 	const CollisionEvent& collision = static_cast<const CollisionEvent&>(event);
 	if (!isDying)
 	{
-		if (collision.otherObject.GetName() == "Enemy")
+		if (collision.otherObject.GetName() == "EnemyShip")
 		{
 			isDying = true;
 			timer = deathDuration;
