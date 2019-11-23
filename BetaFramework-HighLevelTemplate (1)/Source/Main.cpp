@@ -19,6 +19,7 @@
 #include "Level1.h"
 #include "TimedDeath.h"
 #include "PlayerProjectile.h"
+#include "EnemyShadow.h"
 
 //------------------------------------------------------------------------------
 
@@ -51,6 +52,7 @@ int WINAPI WinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prevInstance,
 	spaceManager->GetDefaultSpace().SetLevel<Level1>();
 	factory.RegisterComponent<TimedDeath>();
 	factory.RegisterComponent<PlayerProjectile>();
+	factory.RegisterComponent<EnemyShadow>();
 
 	// Set engine startup settings
 	StartupSettings settings;

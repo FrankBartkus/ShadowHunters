@@ -11,8 +11,9 @@
 #include "stdafx.h"
 #include "EnemyShadow.h"
 using namespace Beta;
-EnemyShadow::EnemyShadow(float speed, float size,bool newPOS)
-	: Component("EnemyShadow"), speed(speed),size(size), rigidBody(nullptr), transform(nullptr), location(LocationTopLeft), player(nullptr),newPos(newPOS)
+EnemyShadow::EnemyShadow(float speed, float size,bool newPOS, float findNewPos)
+	: Component("EnemyShadow"), speed(speed),size(size), rigidBody(nullptr), transform(nullptr), 
+	location(LocationTopLeft), player(nullptr),newPos(newPOS),timer(0), findNewPos(findNewPos)
 {
 }
 
@@ -24,8 +25,22 @@ void EnemyShadow::Initialize()
 	//call the event handler
 	RegisterEventHandler(GetOwner(), "CollisionStarted", &EnemyShadow::OnCollisionStarted);
 	//call these functions
-	SetVelocity();
 	SetPosition();
+}
+
+void EnemyShadow::Update(float dt)
+{
+	if (newPos)
+	{
+		timer = 3;
+		SetVelocity();
+		newPos = false;
+	}
+	timer -= dt;
+	if (timer < 0)
+	{
+		newPos = true;
+	}
 }
 
 void EnemyShadow::OnCollisionStarted(const Beta::Event& event)
@@ -34,7 +49,6 @@ void EnemyShadow::OnCollisionStarted(const Beta::Event& event)
 	const Beta::CollisionEvent& ce = static_cast<const Beta::CollisionEvent&>(event);
 	if (ce.otherObject.GetName() == "Bullet" || ce.otherObject.GetName() == "SpaceShip")
 	{
-		SpawnNewEnemyShadow();
 		GetOwner()->Destroy();
 	}
 }
@@ -68,20 +82,11 @@ void EnemyShadow::SetPosition()
 void EnemyShadow::SetVelocity()
 {
 	Vector2D rand = Vector2D(Random::Range(0, 1), Random::Range(0, 1));
-	Vector2D pos;
-	Vector2D direction = (Vector2D::FromAngleRadians(player->GetComponent<Transform>()->GetRotation()).Normalized() + rand.Normalized());
-	if (newPos == true)
-	{
-		pos = player->GetComponent<Transform>()->GetTranslation();
-		newPos = false;
-	}
+	Vector2D pos = player->GetComponent<Transform>()->GetTranslation();
+	Vector2D direction = (Vector2D::FromAngleRadians(player->GetComponent<Transform>()->GetRotation()).Normalized());
 	rigidBody->SetVelocity(direction * speed);
 
 	transform->SetRotation(atan2(direction.y,direction.x));
-}
-
-void EnemyShadow::SpawnNewEnemyShadow()
-{
 }
 
 void EnemyShadow::SetPlayerShip(GameObject* player_)

@@ -62,6 +62,7 @@ private:
 	//------------------------------------------------------------------------------
 
 	Beta::GameObject* testObject;
+	Beta::GameObject* enemyObject;
 	Beta::SpriteSourcePtr spriteSource;
 };
 

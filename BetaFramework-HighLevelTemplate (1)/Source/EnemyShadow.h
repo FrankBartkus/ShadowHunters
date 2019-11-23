@@ -47,10 +47,16 @@ public:
 	//   speedMin = Minimum of range for asteroid movement speed.
 	//   speedMax = Maximum of range for asteroid movement speed.
 	//   basePointsValue = Point value for largest asteroid.
-	EnemyShadow(float speed = 0.5f, float size = 0.0f, bool newPos = true);
+	EnemyShadow(float speed = 1.0f, float size = 0.0f, bool newPos = true, float findNewPos = 1);
 
 	// Initialize this component (happens at object creation).
 	void Initialize() override;
+
+	void Update(float dt) override;
+
+	//get the player ship
+	void SetPlayerShip(Beta::GameObject* player);
+
 
 private:
 	//------------------------------------------------------------------------------
@@ -67,13 +73,6 @@ private:
 
 	// Set velocity based on size
 	void SetVelocity();
-
-	// Generate new asteroids based off this asteroid
-	void SpawnNewEnemyShadow();
-	
-	//get the player ship
-	void SetPlayerShip(Beta::GameObject* player);
-
 	//------------------------------------------------------------------------------
 	// Private Structures:
 	//------------------------------------------------------------------------------
@@ -106,6 +105,9 @@ private:
 	Location location;
 
 	bool newPos;
+
+	float timer;
+	float findNewPos;
 
 	// Components
 	Beta::Transform* transform;

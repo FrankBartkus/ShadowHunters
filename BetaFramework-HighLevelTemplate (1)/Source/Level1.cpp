@@ -62,15 +62,15 @@ void Level1::Initialize()
 	testObject->AddComponent(rigidBody);
 	PlayerShip* playerShip = new PlayerShip();
 	testObject->AddComponent(playerShip);
-	/*
+	
 	// Create a new game object
-	GameObject* enemyObject = new GameObject("TestObject");
+	enemyObject = new GameObject("TestObject");
 
 	// Create a transform component at 0,0 with scale 300,300
-	transform = new Transform(0.0f, 0.0f);
+	transform = new Transform(-2.0f, 0.0f);
 	transform->SetRotation(0.0f);
 	transform->SetScale(Vector2D(0.5f, 0.5f));
-	testObject->AddComponent(transform);
+	enemyObject->AddComponent(transform);
 
 	// Create a sprite component and set its mesh and sprite source
 	sprite = new Sprite();
@@ -79,11 +79,13 @@ void Level1::Initialize()
 	rigidBody = new RigidBody();
 	enemyObject->AddComponent(rigidBody);
 	EnemyShadow* enemyShadow = new EnemyShadow();
-	enemyObject->AddComponent(enemyShadow);*/
+	enemyShadow->SetPlayerShip(testObject);
+	enemyObject->AddComponent(enemyShadow);
 
 
 	// Add object to object manager
 	GetSpace()->GetObjectManager().AddObject(*testObject);
+	GetSpace()->GetObjectManager().AddObject(*enemyObject);
 }
 
 // Update the Level1 game state.
