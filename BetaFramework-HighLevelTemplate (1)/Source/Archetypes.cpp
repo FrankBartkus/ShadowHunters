@@ -12,6 +12,9 @@
 #include "stdafx.h"
 #include "Archetypes.h"
 #include "EnemyShadow.h"
+#include "TimedDeath.h"
+#include"ScreenWrap.h"
+#include "PlayerProjectile.h"
 using namespace Beta;
 Beta::GameObject* Archetypes::CreatePlayer()
 {
@@ -54,17 +57,17 @@ Beta::Archetype Archetypes::CreateBulletArchetype()
 	//get the sprite
 	Sprite* sprite = new Sprite();
 	//get the timed death
-	//TimedDeath* timedDeath = new TimedDeath();
+	TimedDeath* timedDeath = new TimedDeath();
 	sprite->SetSpriteSource(ResourceGetSpriteSource("Bullet"));
 	// get the player projectile
-	//PlayerProjectile* playerProjectile = new PlayerProjectile();
+	PlayerProjectile* playerProjectile = new PlayerProjectile();
 
 	//add the components to the bulletObject
 	bulletObject->AddComponent(sprite);
 	bulletObject->AddComponent(rigidbody);
 	bulletObject->AddComponent(transform);
-	//bulletObject->AddComponent(timedDeath);
-	//bulletObject->AddComponent(playerProjectile);
+	bulletObject->AddComponent(timedDeath);
+	bulletObject->AddComponent(playerProjectile);
 	EngineGetModule(GameObjectFactory)->SaveObjectToFile(bulletObject);
 
 	return Archetype(bulletObject);

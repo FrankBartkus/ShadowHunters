@@ -20,6 +20,7 @@
 #include "TimedDeath.h"
 #include "PlayerProjectile.h"
 #include "EnemyShadow.h"
+#include "ScreenWrap.h"
 
 //------------------------------------------------------------------------------
 
@@ -53,6 +54,7 @@ int WINAPI WinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prevInstance,
 	factory.RegisterComponent<TimedDeath>();
 	factory.RegisterComponent<PlayerProjectile>();
 	factory.RegisterComponent<EnemyShadow>();
+	factory.RegisterComponent<ScreenWrap>();
 
 	// Set engine startup settings
 	StartupSettings settings;

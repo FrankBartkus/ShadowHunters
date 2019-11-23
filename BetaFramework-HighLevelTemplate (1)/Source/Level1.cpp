@@ -17,6 +17,7 @@
 #include "Level1.h"
 #include "PlayerShip.h"
 #include "EnemyShadow.h"
+#include "ScreenWrap.h"
 
 //------------------------------------------------------------------------------
 
@@ -62,6 +63,8 @@ void Level1::Initialize()
 	testObject->AddComponent(rigidBody);
 	PlayerShip* playerShip = new PlayerShip();
 	testObject->AddComponent(playerShip);
+	ScreenWrap* screenWrap = new ScreenWrap();
+	testObject->AddComponent(screenWrap);
 	
 	// Create a new game object
 	enemyObject = new GameObject("TestObject");
@@ -81,7 +84,11 @@ void Level1::Initialize()
 	EnemyShadow* enemyShadow = new EnemyShadow();
 	enemyShadow->SetPlayerShip(testObject);
 	enemyObject->AddComponent(enemyShadow);
-
+	circleColider = new ColliderCircle();
+	circleColider->SetRadius(0.25f);
+	screenWrap = new ScreenWrap();
+	enemyObject->AddComponent(screenWrap);
+	enemyObject->AddComponent(circleColider);
 
 	// Add object to object manager
 	GetSpace()->GetObjectManager().AddObject(*testObject);
