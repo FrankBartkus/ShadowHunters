@@ -29,6 +29,7 @@ namespace Beta
 	class RigidBody;
 	class GameObject;
 	struct Event;
+	class Vector2D;
 }
 
 //------------------------------------------------------------------------------
@@ -47,7 +48,7 @@ public:
 	//   speedMin = Minimum of range for asteroid movement speed.
 	//   speedMax = Maximum of range for asteroid movement speed.
 	//   basePointsValue = Point value for largest asteroid.
-	EnemyShadow(float speed = 1.0f, float size = 0.0f, bool newPos = true, float findNewPos = 1);
+	EnemyShadow(float speed = 1.0f, float size = 0.0f, bool newPos = true, float findNewPos = 1, float maximumSpeed = 2.0f);
 
 	// Initialize this component (happens at object creation).
 	void Initialize() override;
@@ -72,7 +73,7 @@ private:
 	void SetPosition();
 
 	// Set velocity based on size
-	void SetVelocity();
+	void SetVelocity(Beta::Vector2D randNum);
 	//------------------------------------------------------------------------------
 	// Private Structures:
 	//------------------------------------------------------------------------------
@@ -108,6 +109,9 @@ private:
 
 	float timer;
 	float findNewPos;
+	float maximumSpeed;
+
+	Beta::Vector2D randPos;
 
 	// Components
 	Beta::Transform* transform;
