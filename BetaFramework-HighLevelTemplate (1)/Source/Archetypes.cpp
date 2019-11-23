@@ -11,6 +11,7 @@
 
 #include "stdafx.h"
 #include "Archetypes.h"
+#include "EnemyShadow.h"
 using namespace Beta;
 Beta::GameObject* Archetypes::CreatePlayer()
 {
@@ -87,9 +88,13 @@ Beta::Archetype Archetypes::CreateEnemyArchetype()
 	ColliderCircle* collider = new ColliderCircle();
 	collider->SetRadius(transform->GetScale().x / 2);
 
+	//add the enemy movemen
+	EnemyShadow* enemyShadow = new EnemyShadow();
+
 	//adds the components to the ship object
 	enemyObject->AddComponent(sprite);
 	enemyObject->AddComponent(rigidbody);
 	enemyObject->AddComponent(transform);
+	enemyObject->AddComponent(enemyShadow);
 	return Beta::Archetype();
 }
