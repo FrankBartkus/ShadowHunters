@@ -77,11 +77,11 @@ void Level1::Initialize()
 	rigidBody = new RigidBody();
 	enemyObject->AddComponent(rigidBody);
 	EnemyShadow* enemyShadow = new EnemyShadow();
-	enemyObject->AddComponent(enemyShadow);
+	enemyObject->AddComponent(enemyShadow);*/
 
 
 	// Add object to object manager
-	GetSpace()->GetObjectManager().AddObject(*enemyObject);*/
+	GetSpace()->GetObjectManager().AddObject(*testObject);
 }
 
 // Update the Level1 game state.

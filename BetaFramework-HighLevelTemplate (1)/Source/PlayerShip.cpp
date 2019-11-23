@@ -15,6 +15,7 @@
 
 #include "stdafx.h"
 #include "PlayerShip.h"
+#include "WinLevel.h"
 
 //------------------------------------------------------------------------------
 
@@ -145,6 +146,21 @@ void PlayerShip::OnCollisionStarted(const Beta::Event& event)
 		{
 			isDying = true;
 			timer = deathDuration;
+		}
+		if (collision.otherObject.GetName() == "Key")
+		{
+			GameObjectFactory* gameObjectFactory = EngineGetModule(GameObjectFactory);
+			GameObject* door = gameObjectFactory->CreateObject("Door");
+			door->GetComponent<Transform>()->SetTranslation(transform->GetTranslation());
+			while (transform->GetTranslation().Distance(door->GetComponent<Transform>()->GetTranslation()) > 100.0f)
+			{
+				door->GetComponent<Transform>()->SetTranslation(Vector2D(Random::Range(GetSpace()->GetCamera().GetScreenWorldDimensions().left, GetSpace()->GetCamera().GetScreenWorldDimensions().right), Random::Range(GetSpace()->GetCamera().GetScreenWorldDimensions().bottom, GetSpace()->GetCamera().GetScreenWorldDimensions().top)));
+			}
+			GetOwner()->GetSpace()->GetObjectManager().AddObject(*door);
+		}
+		if (collision.otherObject.GetName() == "Door")
+		{
+			GetSpace()->SetLevel<WinLevel>();
 		}
 	}
 }

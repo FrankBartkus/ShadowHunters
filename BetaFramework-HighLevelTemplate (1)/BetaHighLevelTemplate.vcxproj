@@ -15,19 +15,23 @@
     <ClCompile Include="Source\EnemyShadow.cpp" />
     <ClCompile Include="Source\Level1.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\PlayerProjectile.cpp" />
     <ClCompile Include="Source\PlayerShip.cpp" />
     <ClCompile Include="Source\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Source\TimedDeath.cpp" />
     <ClCompile Include="Source\WinLevel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Archetypes.h" />
     <ClInclude Include="Source\EnemyShadow.h" />
     <ClInclude Include="Source\Level1.h" />
+    <ClInclude Include="Source\PlayerProjectile.h" />
     <ClInclude Include="Source\PlayerShip.h" />
     <ClInclude Include="Source\stdafx.h" />
+    <ClInclude Include="Source\TimedDeath.h" />
     <ClInclude Include="Source\WinLevel.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

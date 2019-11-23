@@ -17,6 +17,8 @@
 
 // Initial level
 #include "Level1.h"
+#include "TimedDeath.h"
+#include "PlayerProjectile.h"
 
 //------------------------------------------------------------------------------
 
@@ -40,13 +42,15 @@ int WINAPI WinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prevInstance,
 	// Add additional modules to engine
 	using namespace Beta;
 	EngineCore& engine = EngineCore::GetInstance();
-	engine.AddModule<GameObjectFactory>();
+	GameObjectFactory& factory = *engine.AddModule<GameObjectFactory>();
 	engine.AddModule<SoundManager>();
 	engine.AddModule<EventManager>();
 	SpaceManager* spaceManager = engine.AddModule<SpaceManager>();
 
 	// Set initial game state to the second level.
 	spaceManager->GetDefaultSpace().SetLevel<Level1>();
+	factory.RegisterComponent<TimedDeath>();
+	factory.RegisterComponent<PlayerProjectile>();
 
 	// Set engine startup settings
 	StartupSettings settings;
