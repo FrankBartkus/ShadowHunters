@@ -33,8 +33,11 @@ using namespace Beta;
 	//   maximumSpeed  = Maximum attainable speed of the ship.
 	//   rotationSpeed = Speed at which the ship rotates.
 	//   bulletSpeed   = Speed at which bullets move when fired by ship.
-PlayerShip::PlayerShip(Beta::Archetype bulletArchetype, float forwardThrust, float maximumSpeed, float rotationSpeed, float bulletSpeed, float deathDuration)
-	: Component("PlayerShip"), bulletArchetype(bulletArchetype), forwardThrust(forwardThrust), maximumSpeed(maximumSpeed), rotationSpeed(rotationSpeed), bulletSpeed(bulletSpeed), deathDuration(deathDuration), transform(nullptr), timer(0), score(0), rigidBody(nullptr), isDying(false)
+PlayerShip::PlayerShip(Beta::Archetype bulletArchetype, float forwardThrust, float maximumSpeed, float rotationSpeed, float bulletSpeed, 
+	float deathDuration,float coolDown)
+	: Component("PlayerShip"), bulletArchetype(bulletArchetype), forwardThrust(forwardThrust), maximumSpeed(maximumSpeed),
+	rotationSpeed(rotationSpeed),bulletSpeed(bulletSpeed), deathDuration(deathDuration), transform(nullptr), timer(0), score(0)
+	, rigidBody(nullptr), isDying(false),coolDown(coolDown)
 {
 
 }
@@ -60,6 +63,7 @@ void PlayerShip::Update(float dt)
 		Rotate();
 		Shoot();
 	}
+	timer2 -= dt;
 }
 // Move forward when up arrow is pressed
 void PlayerShip::Move() const
@@ -102,15 +106,19 @@ void PlayerShip::Rotate() const
 void PlayerShip::Shoot()
 {
 	Input& input = *EngineGetModule(Input);
-	if (input.CheckTriggered(VK_SPACE))
+	if (timer2 <= 0)
 	{
-		GameObjectFactory* gameObjectFactory = EngineGetModule(GameObjectFactory);
-		GameObject* bullet = gameObjectFactory->CreateObject("Bullet");
-		Vector2D direction = Vector2D::FromAngleRadians(transform->GetRotation());
-		bullet->GetComponent<Transform>()->SetTranslation(transform->GetTranslation() + Vector2D::FromAngleRadians(transform->GetRotation()) / 4);
-		bullet->GetComponent<Transform>()->SetRotation(transform->GetRotation());
-		bullet->GetComponent<RigidBody>()->SetVelocity(direction * bulletSpeed + rigidBody->GetVelocity());
-		GetOwner()->GetSpace()->GetObjectManager().AddObject(*bullet);
+		if (input.CheckTriggered(VK_SPACE))
+		{
+			GameObjectFactory* gameObjectFactory = EngineGetModule(GameObjectFactory);
+			GameObject* bullet = gameObjectFactory->CreateObject("Bullet");
+			Vector2D direction = Vector2D::FromAngleRadians(transform->GetRotation());
+			bullet->GetComponent<Transform>()->SetTranslation(transform->GetTranslation() + Vector2D::FromAngleRadians(transform->GetRotation()) / 4);
+			bullet->GetComponent<Transform>()->SetRotation(transform->GetRotation());
+			bullet->GetComponent<RigidBody>()->SetVelocity(direction * bulletSpeed + rigidBody->GetVelocity());
+			GetOwner()->GetSpace()->GetObjectManager().AddObject(*bullet);
+			timer2 = coolDown;
+		}
 	}
 }
 // Execute the death "animation" for the ship.

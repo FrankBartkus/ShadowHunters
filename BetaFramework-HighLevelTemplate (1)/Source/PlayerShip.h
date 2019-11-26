@@ -52,7 +52,7 @@ public:
 	//   bulletSpeed   = Speed at which bullets move when fired by ship.
 	//   deathDuration = The amount of time the death "animation" will last.
 	PlayerShip(Beta::Archetype bulletArchetype = Beta::Archetype(), float forwardThrust = 3.0f, float maximumSpeed = 2.0f, float rotationSpeed = 3.14159f,
-		float bulletSpeed = 4.0f, float deathDuration = 2.0f);
+		float bulletSpeed = 4.0f, float deathDuration = 2.0f,float coolDown = .25f);
 
 	// Initialize this component (happens at object creation).
 	void Initialize() override;
@@ -107,8 +107,10 @@ private:
 	// Death
 	float deathDuration;
 	float timer;
+	float timer2;
 	unsigned homerUsage;
 	bool isDying;
+	float coolDown;
 
 	COMPONENT_SUBCLASS_DECLARATION(PlayerShip)
 };

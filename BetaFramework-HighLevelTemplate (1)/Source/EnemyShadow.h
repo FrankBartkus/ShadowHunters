@@ -100,7 +100,6 @@ private:
 	// Private Variables:
 	//------------------------------------------------------------------------------
 
-	// Properties (save to/load from file)
 	float speed;
 
 	bool newPos;

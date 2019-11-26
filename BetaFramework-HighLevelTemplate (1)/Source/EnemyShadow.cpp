@@ -84,6 +84,7 @@ void EnemyShadow::SetPosition()
 
 void EnemyShadow::SetVelocity(Vector2D randNum)
 {
+	//get the directio that the ship should face and add a random diretion
 	Vector2D pos = player->GetComponent<Transform>()->GetTranslation();
 	Vector2D direction = ((pos + randNum) - transform->GetTranslation()).Normalized();
 	rigidBody->SetVelocity(direction * speed);
