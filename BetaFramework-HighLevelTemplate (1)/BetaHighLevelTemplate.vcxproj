@@ -13,8 +13,10 @@
   <ItemGroup>
     <ClCompile Include="Source\Archetypes.cpp" />
     <ClCompile Include="Source\EnemyShadow.cpp" />
+    <ClCompile Include="Source\Instructions.cpp" />
     <ClCompile Include="Source\Level1.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\MainMenu.cpp" />
     <ClCompile Include="Source\PlayerProjectile.cpp" />
     <ClCompile Include="Source\PlayerShip.cpp" />
     <ClCompile Include="Source\ScreenWrap.cpp" />
@@ -28,7 +30,9 @@
   <ItemGroup>
     <ClInclude Include="Source\Archetypes.h" />
     <ClInclude Include="Source\EnemyShadow.h" />
+    <ClInclude Include="Source\Instructions.h" />
     <ClInclude Include="Source\Level1.h" />
+    <ClInclude Include="Source\MainMenu.h" />
     <ClInclude Include="Source\PlayerProjectile.h" />
     <ClInclude Include="Source\PlayerShip.h" />
     <ClInclude Include="Source\ScreenWrap.h" />
@@ -46,13 +50,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>

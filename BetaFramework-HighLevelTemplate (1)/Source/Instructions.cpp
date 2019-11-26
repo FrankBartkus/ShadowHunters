@@ -1,9 +1,9 @@
 //------------------------------------------------------------------------------
 //
-// File Name:	Level1.cpp
-// Author(s):	Jeremy Kings (j.kings)
+// File Name:	MainMenu.cpp
+// Author(s):	Frank Bartkus (frank.bartkus)
 // Project:		BetaFramework
-// Course:		WANIC VGP2 2018-2019
+// Course:		WANIC VGP2 2019-2020
 //
 // Copyright © 2018 DigiPen (USA) Corporation.
 //
@@ -15,10 +15,8 @@
 
 #include "stdafx.h"
 #include "Level1.h"
+#include "Instructions.h"
 #include "PlayerShip.h"
-#include "EnemyShadow.h"
-#include "ScreenWrap.h"
-#include "Archetypes.h"
 
 //------------------------------------------------------------------------------
 
@@ -29,24 +27,20 @@ using namespace Beta;
 //------------------------------------------------------------------------------
 
 // Creates an instance of Level 1.
-Level1::Level1()
-	: Level("Level 1"), testObject(nullptr),numOfEnemys(8)
+Instructions::Instructions()
+	: Level("Instructions"), testObject(nullptr)
 {
 }
 
-void Level1::Load()
+void Instructions::Load()
 {
 	spriteSource = ResourceGetSpriteSource("Circle");
 }
 
 // Initialize the memory associated with the Level1 game state.
-void Level1::Initialize()
+void Instructions::Initialize()
 {
-	std::cout << "Level1: Initialize" << std::endl;
-
-	//get the enemy archetype
-	enemyArchetype = Archetypes::CreateEnemyArchetype();
-
+	std::cout << "WinLevel: Initialize" << std::endl;
 
 	// Create a new game object
 	testObject = new GameObject("TestObject");
@@ -54,67 +48,35 @@ void Level1::Initialize()
 	// Create a transform component at 0,0 with scale 300,300
 	Transform* transform = new Transform(0.0f, 0.0f);
 	transform->SetRotation(0.0f);
-	transform->SetScale(Vector2D(0.5f, 0.5f));
+	float y = 4.0f;
+	transform->SetScale(Vector2D(y * 1.61803399, y));
 	testObject->AddComponent(transform);
 
 	// Create a sprite component and set its mesh and sprite source
 	Sprite* sprite = new Sprite();
-	sprite->SetSpriteSource(ResourceGetSpriteSource("PlayerShip"));
+	sprite->SetSpriteSource(ResourceGetSpriteSource("Instructions"));
 	testObject->AddComponent(sprite);
-	ColliderCircle* circleColider = new ColliderCircle();
-	circleColider->SetRadius(0.25f);
-	testObject->AddComponent(circleColider);
-	RigidBody* rigidBody = new RigidBody();
-	testObject->AddComponent(rigidBody);
-	PlayerShip* playerShip = new PlayerShip();
-	testObject->AddComponent(playerShip);
-	ScreenWrap* screenWrap = new ScreenWrap();
-	testObject->AddComponent(screenWrap);
-	
+
 	// Add object to object manager
 	GetSpace()->GetObjectManager().AddObject(*testObject);
-
-	//spawn the enemys
-	SpawnEnemy();
 }
 
 // Update the Level1 game state.
 // Params:
 //	 dt = Change in time (in seconds) since the last game loop.
-void Level1::Update(float dt)
+void Instructions::Update(float dt)
 {
 	UNREFERENCED_PARAMETER(dt);
 
 	Input* input = EngineGetModule(Input);
 
 	// If the user presses the '1' key, restart the current level
-	if (input->CheckTriggered('1'))
-		GetSpace()->RestartLevel();
-
-	// If the user presses the 'D' key, delete the object
-	if (testObject != nullptr && input->CheckTriggered('D'))
-	{
-		testObject->Destroy();
-		testObject = nullptr;
-	}
+	if (input->CheckTriggered(32))
+		GetSpace()->SetLevel<Level1>();
 }
 
 // Shutdown any memory associated with the Level1 game state.
-void Level1::Shutdown()
+void Instructions::Shutdown()
 {
-	std::cout << "Level1::Shutdown" << std::endl;
-}
-
-void Level1::SpawnEnemy()
-{
-	int key = rand() % 8;
-	for (int i = 0; i < numOfEnemys;i++)
-	{
-		GameObject* enemy = new GameObject(enemyArchetype);
-		if (key == i)
-		{
-			enemy->GetComponent<EnemyShadow>()->BecomeReal();
-		}
-		GetSpace()->GetObjectManager().AddObject(*enemy);
-	}
+	std::cout << "MainMenu::Shutdown" << std::endl;
 }

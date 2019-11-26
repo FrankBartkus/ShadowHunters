@@ -40,7 +40,7 @@ void WinLevel::Load()
 // Initialize the memory associated with the Level1 game state.
 void WinLevel::Initialize()
 {
-	std::cout << "Level1: Initialize" << std::endl;
+	std::cout << "WinLevel: Initialize" << std::endl;
 
 	// Create a new game object
 	testObject = new GameObject("TestObject");
@@ -77,5 +77,5 @@ void WinLevel::Update(float dt)
 // Shutdown any memory associated with the Level1 game state.
 void WinLevel::Shutdown()
 {
-	std::cout << "Level1::Shutdown" << std::endl;
+	std::cout << "WinLevel::Shutdown" << std::endl;
 }

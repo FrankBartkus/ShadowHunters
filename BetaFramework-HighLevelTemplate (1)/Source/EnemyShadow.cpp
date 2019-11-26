@@ -11,9 +11,9 @@
 #include "stdafx.h"
 #include "EnemyShadow.h"
 using namespace Beta;
-EnemyShadow::EnemyShadow(float speed,bool newPOS, float maximumSpeed)
-	: Component("EnemyShadow"), speed(speed),rigidBody(nullptr), transform(nullptr), 
-	player(nullptr),newPos(newPOS),timer(0), maximumSpeed(maximumSpeed),
+EnemyShadow::EnemyShadow(float speed, float size,bool newPOS, float findNewPos,float maximumSpeed)
+	: Component("EnemyShadow"), speed(speed),size(size), rigidBody(nullptr), transform(nullptr), 
+	location(LocationTopLeft), player(nullptr),newPos(newPOS),timer(0), findNewPos(findNewPos), maximumSpeed(maximumSpeed), real(false),
 	randPos(Vector2D(0.0f,0.0f))
 {
 }
@@ -51,6 +51,15 @@ void EnemyShadow::OnCollisionStarted(const Beta::Event& event)
 	const Beta::CollisionEvent& ce = static_cast<const Beta::CollisionEvent&>(event);
 	if (ce.otherObject.GetName() == "Bullet" || ce.otherObject.GetName() == "SpaceShip")
 	{
+		if (real)
+		{
+			GameObjectFactory* gameObjectFactory = EngineGetModule(GameObjectFactory);
+			GameObject* key = gameObjectFactory->CreateObject("key");
+			Vector2D direction = Vector2D::FromAngleRadians(transform->GetRotation());
+			key->GetComponent<Transform>()->SetTranslation(transform->GetTranslation());
+			key->GetComponent<Transform>()->SetRotation(0);
+			GetOwner()->GetSpace()->GetObjectManager().AddObject(*key);
+		}
 		GetOwner()->Destroy();
 	}
 }
@@ -99,6 +108,10 @@ void EnemyShadow::SetVelocity(Vector2D randNum)
 void EnemyShadow::SetPlayerShip(GameObject* player_)
 {
 	player = player_;
+}
+void EnemyShadow::BecomeReal()
+{
+	real = true;
 }
 
 COMPONENT_SUBCLASS_DEFINITION(EnemyShadow)

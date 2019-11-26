@@ -1,0 +1,6 @@
+Main
+{
+  numRows : 1
+  numCols : 1
+  texture : Main.png
+}

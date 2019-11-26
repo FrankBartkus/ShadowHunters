@@ -16,7 +16,7 @@
 #include "stdafx.h"
 
 // Initial level
-#include "Level1.h"
+#include "MainMenu.h"
 #include "TimedDeath.h"
 #include "PlayerProjectile.h"
 #include "EnemyShadow.h"
@@ -50,7 +50,7 @@ int WINAPI WinMain(_In_ HINSTANCE instance, _In_opt_ HINSTANCE prevInstance,
 	SpaceManager* spaceManager = engine.AddModule<SpaceManager>();
 
 	// Set initial game state to the second level.
-	spaceManager->GetDefaultSpace().SetLevel<Level1>();
+	spaceManager->GetDefaultSpace().SetLevel<MainMenu>();
 	factory.RegisterComponent<TimedDeath>();
 	factory.RegisterComponent<PlayerProjectile>();
 	factory.RegisterComponent<EnemyShadow>();

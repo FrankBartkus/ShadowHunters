@@ -155,7 +155,7 @@ void PlayerShip::OnCollisionStarted(const Beta::Event& event)
 			isDying = true;
 			timer = deathDuration;
 		}
-		if (collision.otherObject.GetName() == "Key")
+		if (collision.otherObject.GetName() == "key")
 		{
 			GameObject* door = new GameObject("Door");
 			ColliderRectangle* colliderRectangle = new ColliderRectangle();

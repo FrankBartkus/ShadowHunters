@@ -58,6 +58,7 @@ public:
 	//get the player ship
 	void SetPlayerShip(Beta::GameObject* player);
 
+	void BecomeReal();
 
 private:
 	//------------------------------------------------------------------------------
@@ -103,6 +104,8 @@ private:
 	float speed;
 
 	bool newPos;
+
+	bool real;
 
 	float timer;
 	float maximumSpeed;

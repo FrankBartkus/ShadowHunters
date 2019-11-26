@@ -53,7 +53,7 @@ void PlayerProjectile::Update(float dt)
 void PlayerProjectile::OnCollisionStarted(const Beta::Event& event)
 {
 	const CollisionEvent& collision = static_cast<const CollisionEvent&>(event);
-	if (collision.otherObject.GetName() == "Asteroid")
+	if (collision.otherObject.GetName() == "EnemyShip")
 	{
 		GetOwner()->Destroy();
 	}
