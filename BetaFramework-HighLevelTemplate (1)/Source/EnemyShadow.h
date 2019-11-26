@@ -70,9 +70,6 @@ private:
 	//	 event = The collision event object.
 	void OnCollisionStarted(const Beta::Event& event);
 
-	// This will spawn the enemy
-	void SpawnEnemy();
-
 	// Set position of enemy based on origin
 	void SetPosition();
 
