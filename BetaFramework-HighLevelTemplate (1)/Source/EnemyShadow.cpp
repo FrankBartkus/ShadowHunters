@@ -55,29 +55,30 @@ void EnemyShadow::OnCollisionStarted(const Beta::Event& event)
 	}
 }
 
+void EnemyShadow::SpawnEnemy()
+{
+}
+
 void EnemyShadow::SetPosition()
 {
 	BoundingRectangle screenDim = GetSpace()->GetCamera().GetScreenWorldDimensions();
-	if (size == SizeLarge)
+	//get a random number
+	int rand = Random::Range(0, 3);
+	// change the translation depending on the random number
+	switch (rand)
 	{
-		//get a random number
-		int rand = Random::Range(0, 3);
-		// change the translation depending on the random number
-		switch (rand)
-		{
-		case LocationTopLeft:
-			transform->SetTranslation(Vector2D(screenDim.left, screenDim.top));
-			break;
-		case LocationTopRight:
-			transform->SetTranslation(Vector2D(screenDim.right, screenDim.top));
-			break;
-		case LocationBottomLeft:
-			transform->SetTranslation(Vector2D(screenDim.left, screenDim.bottom));
-			break;
-		case LocationBottomRight:
-			transform->SetTranslation(Vector2D(screenDim.right, screenDim.bottom));
-			break;
-		}
+	case LocationTopLeft:
+		transform->SetTranslation(Vector2D(screenDim.left, screenDim.top));
+		break;
+	case LocationTopRight:
+		transform->SetTranslation(Vector2D(screenDim.right, screenDim.top));
+		break;
+	case LocationBottomLeft:
+		transform->SetTranslation(Vector2D(screenDim.left, screenDim.bottom));
+		break;
+	case LocationBottomRight:
+		transform->SetTranslation(Vector2D(screenDim.right, screenDim.bottom));
+		break;
 	}
 }
 

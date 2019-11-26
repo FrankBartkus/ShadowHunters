@@ -69,10 +69,13 @@ private:
 	//	 event = The collision event object.
 	void OnCollisionStarted(const Beta::Event& event);
 
-	// Set position of asteroid based on origin
+	// This will spawn the enemy
+	void SpawnEnemy();
+
+	// Set position of enemy based on origin
 	void SetPosition();
 
-	// Set velocity based on size
+	// Set velocity
 	void SetVelocity(Beta::Vector2D randNum);
 	//------------------------------------------------------------------------------
 	// Private Structures:

@@ -75,29 +75,28 @@ Beta::Archetype Archetypes::CreateBulletArchetype()
 
 Beta::Archetype Archetypes::CreateEnemyArchetype()
 {
-	//create the game object
-	GameObject* enemyObject = new GameObject("enemy");
-	//get the transform
-	Transform* transform = new Transform(0.0f, 0.0f);
-	//set the scale
+	// Create a new game object
+	GameObject* enemyObject = new GameObject("EnemyShip");
+
+	// Create a transform component at 0,0 with scale 300,300
+	Transform* transform = new Transform(-2.0f, 0.0f);
+	transform->SetRotation(0.0f);
 	transform->SetScale(Vector2D(0.5f, 0.5f));
-	//get the rigidbody
-	RigidBody* rigidbody = new RigidBody();
-	//get the sprite
-	Sprite* sprite = new Sprite();
-	sprite->SetSpriteSource(ResourceGetSpriteSource("PlayerShip"));
-
-	//add the collider and set the radius
-	ColliderCircle* collider = new ColliderCircle();
-	collider->SetRadius(transform->GetScale().x / 2);
-
-	//add the enemy movemen
-	EnemyShadow* enemyShadow = new EnemyShadow();
-
-	//adds the components to the ship object
-	enemyObject->AddComponent(sprite);
-	enemyObject->AddComponent(rigidbody);
 	enemyObject->AddComponent(transform);
+
+	// Create a sprite component and set its mesh and sprite source
+	Sprite* sprite = new Sprite();
+	sprite->SetSpriteSource(ResourceGetSpriteSource("EnemyShip"));
+	enemyObject->AddComponent(sprite);
+	RigidBody* rigidBody = new RigidBody();
+	enemyObject->AddComponent(rigidBody);
+	EnemyShadow* enemyShadow = new EnemyShadow();
+	enemyShadow->SetPlayerShip(enemyObject);
 	enemyObject->AddComponent(enemyShadow);
-	return Beta::Archetype();
+	ColliderCircle* circleCollider = new ColliderCircle();
+	circleCollider->SetRadius(0.25f);
+	ScreenWrap* screenWrap = new ScreenWrap();
+	enemyObject->AddComponent(screenWrap);
+	enemyObject->AddComponent(circleCollider);
+	return Archetype(enemyObject);
 }

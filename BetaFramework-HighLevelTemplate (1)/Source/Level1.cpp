@@ -18,6 +18,7 @@
 #include "PlayerShip.h"
 #include "EnemyShadow.h"
 #include "ScreenWrap.h"
+#include "Archetypes.h"
 
 //------------------------------------------------------------------------------
 
@@ -29,7 +30,7 @@ using namespace Beta;
 
 // Creates an instance of Level 1.
 Level1::Level1()
-	: Level("Level 1"), testObject(nullptr)
+	: Level("Level 1"), testObject(nullptr),numOfEnemys(8)
 {
 }
 
@@ -42,6 +43,10 @@ void Level1::Load()
 void Level1::Initialize()
 {
 	std::cout << "Level1: Initialize" << std::endl;
+
+	//get the enemy archetype
+	enemyArchetype = Archetypes::CreateEnemyArchetype();
+
 
 	// Create a new game object
 	testObject = new GameObject("TestObject");
@@ -66,33 +71,11 @@ void Level1::Initialize()
 	ScreenWrap* screenWrap = new ScreenWrap();
 	testObject->AddComponent(screenWrap);
 	
-	// Create a new game object
-	enemyObject = new GameObject("EnemyShip");
-
-	// Create a transform component at 0,0 with scale 300,300
-	transform = new Transform(-2.0f, 0.0f);
-	transform->SetRotation(0.0f);
-	transform->SetScale(Vector2D(0.5f, 0.5f));
-	enemyObject->AddComponent(transform);
-
-	// Create a sprite component and set its mesh and sprite source
-	sprite = new Sprite();
-	sprite->SetSpriteSource(ResourceGetSpriteSource("EnemyShip"));
-	enemyObject->AddComponent(sprite);
-	rigidBody = new RigidBody();
-	enemyObject->AddComponent(rigidBody);
-	EnemyShadow* enemyShadow = new EnemyShadow();
-	enemyShadow->SetPlayerShip(testObject);
-	enemyObject->AddComponent(enemyShadow);
-	circleColider = new ColliderCircle();
-	circleColider->SetRadius(0.25f);
-	screenWrap = new ScreenWrap();
-	enemyObject->AddComponent(screenWrap);
-	enemyObject->AddComponent(circleColider);
-
 	// Add object to object manager
 	GetSpace()->GetObjectManager().AddObject(*testObject);
-	GetSpace()->GetObjectManager().AddObject(*enemyObject);
+
+	//spawn the enemys
+	SpawnEnemy();
 }
 
 // Update the Level1 game state.
@@ -120,4 +103,14 @@ void Level1::Update(float dt)
 void Level1::Shutdown()
 {
 	std::cout << "Level1::Shutdown" << std::endl;
+}
+
+void Level1::SpawnEnemy()
+{
+	for (int i = 0; i < numOfEnemys;i++)
+	{
+		std::cout << i << std::endl;
+		GameObject* enemy = new GameObject(enemyArchetype);
+		GetSpace()->GetObjectManager().AddObject(*enemy);
+	}
 }
