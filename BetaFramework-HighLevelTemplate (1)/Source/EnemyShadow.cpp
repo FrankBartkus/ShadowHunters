@@ -11,9 +11,9 @@
 #include "stdafx.h"
 #include "EnemyShadow.h"
 using namespace Beta;
-EnemyShadow::EnemyShadow(float speed, float size,bool newPOS, float findNewPos,float maximumSpeed)
-	: Component("EnemyShadow"), speed(speed),size(size), rigidBody(nullptr), transform(nullptr), 
-	location(LocationTopLeft), player(nullptr),newPos(newPOS),timer(0), findNewPos(findNewPos), maximumSpeed(maximumSpeed),
+EnemyShadow::EnemyShadow(float speed,bool newPOS, float maximumSpeed)
+	: Component("EnemyShadow"), speed(speed),rigidBody(nullptr), transform(nullptr), 
+	player(nullptr),newPos(newPOS),timer(0), maximumSpeed(maximumSpeed),
 	randPos(Vector2D(0.0f,0.0f))
 {
 }
@@ -33,7 +33,7 @@ void EnemyShadow::Update(float dt)
 {
 	if (newPos)
 	{
-		randPos = Random::Range(-1.0f, 1.0f), Random::Range(-1.0f, 1.0f);
+		randPos = Vector2D(Random::Range(-1.0f, 1.0f), Random::Range(-1.0f, 1.0f));
 		timer = 3;
 		newPos = false;
 	}
@@ -85,7 +85,7 @@ void EnemyShadow::SetPosition()
 void EnemyShadow::SetVelocity(Vector2D randNum)
 {
 	Vector2D pos = player->GetComponent<Transform>()->GetTranslation();
-	Vector2D direction = pos - transform->GetTranslation() + randNum;
+	Vector2D direction = ((pos + randNum) - transform->GetTranslation()).Normalized();
 	rigidBody->SetVelocity(direction * speed);
 
 	transform->SetRotation(atan2(direction.y,direction.x));

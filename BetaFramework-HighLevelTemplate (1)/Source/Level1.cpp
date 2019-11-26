@@ -111,6 +111,7 @@ void Level1::SpawnEnemy()
 	{
 		std::cout << i << std::endl;
 		GameObject* enemy = new GameObject(enemyArchetype);
+		enemy->GetComponent<EnemyShadow>()->SetPlayerShip(testObject);
 		GetSpace()->GetObjectManager().AddObject(*enemy);
 	}
 }

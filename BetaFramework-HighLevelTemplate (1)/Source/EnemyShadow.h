@@ -48,7 +48,7 @@ public:
 	//   speedMin = Minimum of range for asteroid movement speed.
 	//   speedMax = Maximum of range for asteroid movement speed.
 	//   basePointsValue = Point value for largest asteroid.
-	EnemyShadow(float speed = 1.0f, float size = 0.0f, bool newPos = true, float findNewPos = 1, float maximumSpeed = 2.0f);
+	EnemyShadow(float speed = 1.0f, bool newPos = true, float maximumSpeed = 2.0f);
 
 	// Initialize this component (happens at object creation).
 	void Initialize() override;
@@ -103,15 +103,9 @@ private:
 	// Properties (save to/load from file)
 	float speed;
 
-	// Other variables
-	float size;
-
-	Location location;
-
 	bool newPos;
 
 	float timer;
-	float findNewPos;
 	float maximumSpeed;
 
 	Beta::Vector2D randPos;
