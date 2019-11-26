@@ -45,9 +45,9 @@ public:
 
 	// Asteroid constructor
 	// Params:
-	//   speedMin = Minimum of range for asteroid movement speed.
-	//   speedMax = Maximum of range for asteroid movement speed.
-	//   basePointsValue = Point value for largest asteroid.
+	// speed = how fast the ship will go
+	// newPos = when to get the new position
+	// maximumSpeed = the fastest the enemy will be able to go
 	EnemyShadow(float speed = 1.0f, bool newPos = true, float maximumSpeed = 2.0f);
 
 	// Initialize this component (happens at object creation).
@@ -65,7 +65,7 @@ private:
 	// Private Functions:EnemyShadow
 	//------------------------------------------------------------------------------
 
-	// The collision handling function for Asteroids.
+	// The collision handling function for Enemy.
 	// Params:
 	//	 event = The collision event object.
 	void OnCollisionStarted(const Beta::Event& event);

@@ -78,13 +78,14 @@ Beta::Archetype Archetypes::CreateEnemyArchetype()
 	// Create a new game object
 	GameObject* enemyObject = new GameObject("EnemyShip");
 
-	// Create a transform component at 0,0 with scale 300,300
+	// Create a transform component at 0,0
 	Transform* transform = new Transform(-2.0f, 0.0f);
 	transform->SetRotation(0.0f);
 	transform->SetScale(Vector2D(0.5f, 0.5f));
 	enemyObject->AddComponent(transform);
 
 	// Create a sprite component and set its mesh and sprite source
+	//Adding all of the components that the enemy ship will need
 	Sprite* sprite = new Sprite();
 	sprite->SetSpriteSource(ResourceGetSpriteSource("EnemyShip"));
 	enemyObject->AddComponent(sprite);

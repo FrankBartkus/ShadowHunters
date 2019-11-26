@@ -26,7 +26,7 @@ using namespace Beta;
 // Public Functions:
 //------------------------------------------------------------------------------
 
-// Creates an instance of Level 1.
+// Creates an instance of Win Level.
 WinLevel::WinLevel()
 	: Level("WinLevel"), testObject(nullptr)
 {
@@ -37,7 +37,7 @@ void WinLevel::Load()
 	spriteSource = ResourceGetSpriteSource("Circle");
 }
 
-// Initialize the memory associated with the Level1 game state.
+// Initialize the memory associated with the Win game state.
 void WinLevel::Initialize()
 {
 	std::cout << "WinLevel: Initialize" << std::endl;
@@ -45,13 +45,13 @@ void WinLevel::Initialize()
 	// Create a new game object
 	testObject = new GameObject("TestObject");
 
-	// Create a transform component at 0,0 with scale 300,300
+	// Create a transform component at 0,0
 	Transform* transform = new Transform(0.0f, 0.0f);
 	transform->SetRotation(0.0f);
 	transform->SetScale(Vector2D(8.0f, 5.0f));
 	testObject->AddComponent(transform);
 
-	// Create a sprite component and set its mesh and sprite source
+	// Create a sprite component and set its mesh to the Win sprite source
 	Sprite* sprite = new Sprite();
 	sprite->SetSpriteSource(ResourceGetSpriteSource("Win"));
 	testObject->AddComponent(sprite);
@@ -69,7 +69,7 @@ void WinLevel::Update(float dt)
 
 	Input* input = EngineGetModule(Input);
 
-	// If the user presses the '1' key, restart the current level
+	// If the user presses the '1' key, set the level to the first level
 	if (input->CheckTriggered(32))
 		GetSpace()->SetLevel<Level1>();
 }
