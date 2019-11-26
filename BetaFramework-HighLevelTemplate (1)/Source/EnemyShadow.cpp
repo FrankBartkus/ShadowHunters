@@ -11,9 +11,9 @@
 #include "stdafx.h"
 #include "EnemyShadow.h"
 using namespace Beta;
-EnemyShadow::EnemyShadow(float speed, float size,bool newPOS, float findNewPos,float maximumSpeed)
-	: Component("EnemyShadow"), speed(speed),size(size), rigidBody(nullptr), transform(nullptr), 
-	location(LocationTopLeft), player(nullptr),newPos(newPOS),timer(0), findNewPos(findNewPos), maximumSpeed(maximumSpeed), real(false),
+EnemyShadow::EnemyShadow(float speed,bool newPOS,float maximumSpeed)
+	: Component("EnemyShadow"), speed(speed), rigidBody(nullptr), transform(nullptr), 
+	player(nullptr),newPos(newPOS),timer(0), maximumSpeed(maximumSpeed), real(false),
 	randPos(Vector2D(0.0f,0.0f))
 {
 }
@@ -31,6 +31,7 @@ void EnemyShadow::Initialize()
 
 void EnemyShadow::Update(float dt)
 {
+	//pick a new random and reset the timer
 	if (newPos)
 	{
 		randPos = Vector2D(Random::Range(-1.0f, 1.0f), Random::Range(-1.0f, 1.0f));
@@ -64,10 +65,6 @@ void EnemyShadow::OnCollisionStarted(const Beta::Event& event)
 	}
 }
 
-void EnemyShadow::SpawnEnemy()
-{
-}
-
 void EnemyShadow::SetPosition()
 {
 	BoundingRectangle screenDim = GetSpace()->GetCamera().GetScreenWorldDimensions();
@@ -99,6 +96,7 @@ void EnemyShadow::SetVelocity(Vector2D randNum)
 	rigidBody->SetVelocity(direction * speed);
 
 	transform->SetRotation(atan2(direction.y,direction.x));
+	//makes sure you are not going over the maximumspeed
 	if (rigidBody->GetVelocity().Magnitude() > maximumSpeed)
 	{
 		rigidBody->SetVelocity(rigidBody->GetVelocity().Normalized() * maximumSpeed);

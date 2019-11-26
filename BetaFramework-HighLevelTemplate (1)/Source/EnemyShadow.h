@@ -102,11 +102,8 @@ private:
 	//------------------------------------------------------------------------------
 
 	float speed;
-
 	bool newPos;
-
 	bool real;
-
 	float timer;
 	float maximumSpeed;
 

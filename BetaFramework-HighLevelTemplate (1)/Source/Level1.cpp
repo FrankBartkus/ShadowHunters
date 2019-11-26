@@ -115,6 +115,7 @@ void Level1::SpawnEnemy()
 		{
 			enemy->GetComponent<EnemyShadow>()->BecomeReal();
 		}
+		enemy->GetComponent<EnemyShadow>()->SetPlayerShip(testObject);
 		GetSpace()->GetObjectManager().AddObject(*enemy);
 	}
 }
